@@ -54,6 +54,14 @@ class MultiselectColumn extends ActionColumn
     protected $valuePrefix;
 
     /**
+     * Should the route be called with ajax.
+     * Default: true
+     *
+     * @var bool
+     */
+    protected $ajax;
+
+    /**
      * Id selector where all multiselect actions are rendered.
      * Default: null ('sg-datatables-{{ sg_datatables_view.name }}-multiselect-actions')
      *
@@ -164,6 +172,7 @@ class MultiselectColumn extends ActionColumn
             'value_prefix' => false,
             'render_actions_to_id' => null,
             'render_if' => null,
+            'ajax' => true,
         ));
 
         $resolver->setAllowedTypes('attributes', array('null', 'array'));
@@ -171,6 +180,7 @@ class MultiselectColumn extends ActionColumn
         $resolver->setAllowedTypes('value_prefix', 'bool');
         $resolver->setAllowedTypes('render_actions_to_id', array('null', 'string'));
         $resolver->setAllowedTypes('render_if', array('null', 'Closure'));
+        $resolver->setAllowedTypes('ajax', 'bool');
 
         return $this;
     }
@@ -310,6 +320,30 @@ class MultiselectColumn extends ActionColumn
     public function setValuePrefix($valuePrefix)
     {
         $this->valuePrefix = $valuePrefix;
+
+        return $this;
+    }
+
+    /**
+     * Get ajax.
+     *
+     * @return bool
+     */
+    public function isAjax()
+    {
+        return $this->ajax;
+    }
+
+    /**
+     * Set ajax.
+     *
+     * @param bool $ajax
+     *
+     * @return $this
+     */
+    public function setAjax($ajax)
+    {
+        $this->ajax = $ajax;
 
         return $this;
     }

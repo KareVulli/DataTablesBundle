@@ -159,27 +159,59 @@ $(".sg-datatables-{{ datatable_name }}-multiselect-action").on("click", function
         {% set token = csrf_token('multiselect') %}
 
         var url = $(this).attr("href");
-        if (url != null) {
-            $.ajax({
-                url: url,
-                type: "POST",
-                cache: false,
-                data: {
-                    'data': items,
-                    'token': "{{ token }}"
-                },
-                success: function(msg) {
-                    if (pipeline > 0) {
-                        oTable.clearPipeline().draw();
-                    } else {
-                        oTable.draw();
+        {% if ajax %}
+            if (url != null) {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        'data': items,
+                        'token': "{{ token }}"
+                    },
+                    success: function(msg) {
+                        if (pipeline > 0) {
+                            oTable.clearPipeline().draw();
+                        } else {
+                            oTable.draw();
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log(XMLHttpRequest + ' ' + textStatus + ' '  + errorThrown);
                     }
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    console.log(XMLHttpRequest + ' ' + textStatus + ' '  + errorThrown);
-                }
-            })
-        }
+                })
+            }
+        {% else %}
+            var form = '';
+            $.each( items, function( id, value ) {
+                $.each( value, function( key, value ) {
+                    form += '<input type="hidden" name="data[' + id + '][' + key + ']" value="' + escapeHtml(value) + '">';
+                });
+            });
+            form = $('<form action="' + url + '" method="POST">' + form + '</form>');
+            $(document.body).append(form);
+            form.submit();
+
+            function escapeHtml (string) {
+                var entityMap = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;',
+                    '/': '&#x2F;',
+                    '`': '&#x60;',
+                    '=': '&#x3D;'
+                };
+
+                return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+                    return entityMap[s];
+                });
+            }
+        {% endif %}
+
+        
+        
     } else {
         alert("{{ 'sg.datatables.selectError'|trans({}, 'messages') }}");
     }
