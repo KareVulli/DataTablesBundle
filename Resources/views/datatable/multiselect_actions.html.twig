@@ -183,6 +183,8 @@ $(".sg-datatables-{{ datatable_name }}-multiselect-action").on("click", function
             }
         {% else %}
             var form = '';
+            form += '<input type="hidden" name="token" value="{{ token }}">';
+            
             $.each( items, function( id, value ) {
                 $.each( value, function( key, value ) {
                     form += '<input type="hidden" name="data[' + id + '][' + key + ']" value="' + escapeHtml(value) + '">';
