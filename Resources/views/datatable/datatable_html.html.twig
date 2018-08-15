@@ -35,21 +35,21 @@
             {% endif %}
         {% endif %}
     </thead>
+    <tfoot>
         {% if true == individual_filtering %}
             {% if 'foot' == sg_datatables_view.options.individualFilteringPosition or 'both' == sg_datatables_view.options.individualFilteringPosition%}
-            <tfoot>
-                    <tr>
-                        {% for column in sg_datatables_view.columnBuilder.columns %}
-                            <td>
-                                {% if column.searchable %}
-                                    {{ sg_datatables_render_filter(sg_datatables_view, column, 'foot') }}
-                                {% endif %}
-                            </td>
-                        {% endfor %}
-                    </tr>
-                </tfoot>
+                <tr>
+                    {% for column in sg_datatables_view.columnBuilder.columns %}
+                        <td>
+                            {% if column.searchable %}
+                                {{ sg_datatables_render_filter(sg_datatables_view, column, 'foot') }}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
             {% endif %}
         {% endif %}
+    </tfoot>
     <tbody>
     </tbody>
 </table>
