@@ -36,18 +36,21 @@
         {% endif %}
     </thead>
     <tfoot>
-        {% if true == individual_filtering %}
-            {% if 'foot' == sg_datatables_view.options.individualFilteringPosition or 'both' == sg_datatables_view.options.individualFilteringPosition%}
-                <tr>
-                    {% for column in sg_datatables_view.columnBuilder.columns %}
-                        <td>
-                            {% if column.searchable %}
-                                {{ sg_datatables_render_filter(sg_datatables_view, column, 'foot') }}
-                            {% endif %}
-                        </td>
-                    {% endfor %}
-                </tr>
-            {% endif %}
+        <tr>
+            {% for column in sg_datatables_view.columnBuilder.columns %}
+                <td></td>
+            {% endfor %}
+        </tr>
+        {% if true == individual_filtering and ('foot' == sg_datatables_view.options.individualFilteringPosition or 'both' == sg_datatables_view.options.individualFilteringPosition) %}
+            <tr>
+                {% for column in sg_datatables_view.columnBuilder.columns %}
+                    <td>
+                        {% if column.searchable %}
+                            {{ sg_datatables_render_filter(sg_datatables_view, column, 'foot') }}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
         {% endif %}
     </tfoot>
     <tbody>
