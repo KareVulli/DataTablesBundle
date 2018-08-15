@@ -36,11 +36,13 @@
         {% endif %}
     </thead>
     <tfoot>
-        <tr>
-            {% for column in sg_datatables_view.columnBuilder.columns %}
-                <td></td>
-            {% endfor %}
-        </tr>
+        {% if true == sg_datatables_view.options.footer %}
+            <tr>
+                {% for column in sg_datatables_view.columnBuilder.columns %}
+                    <td></td>
+                {% endfor %}
+            </tr>
+        {% endif %}
         {% if true == individual_filtering and ('foot' == sg_datatables_view.options.individualFilteringPosition or 'both' == sg_datatables_view.options.individualFilteringPosition) %}
             <tr>
                 {% for column in sg_datatables_view.columnBuilder.columns %}

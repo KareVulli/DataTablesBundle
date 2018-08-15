@@ -242,6 +242,14 @@ class Options
      */
     protected $globalSearchType;
 
+    /**
+     * To add footer element to the table
+     * Default: false
+     *
+     * @var string
+     */
+    protected $footer;
+
     //-------------------------------------------------
     // Ctor.
     //-------------------------------------------------
@@ -291,6 +299,7 @@ class Options
             'individual_filtering_position' => 'head',
             'search_in_non_visible_columns' => false,
             'global_search_type' => 'like',
+            'footer' => false
         ));
 
         $resolver->setAllowedTypes('defer_loading', array('null', 'int', 'array'));
@@ -316,6 +325,7 @@ class Options
         $resolver->setAllowedTypes('individual_filtering_position', 'string');
         $resolver->setAllowedTypes('search_in_non_visible_columns', 'bool');
         $resolver->setAllowedTypes('global_search_type', 'string');
+        $resolver->setAllowedTypes('footer', 'bool');
 
         $resolver->setAllowedValues('individual_filtering_position', array('head', 'foot', 'both'));
         $resolver->setAllowedValues('global_search_type', array('like', 'notLike', 'eq', 'neq', 'lt', 'lte', 'gt', 'gte', 'in', 'notIn', 'isNull', 'isNotNull'));
@@ -895,6 +905,30 @@ class Options
     public function setGlobalSearchType($globalSearchType)
     {
         $this->globalSearchType = $globalSearchType;
+
+        return $this;
+    }
+
+    /**
+     * Get footer.
+     *
+     * @return boolean
+     */
+    public function hasFooter()
+    {
+        return $this->footer;
+    }
+
+    /**
+     * Set footer.
+     *
+     * @param boolean $footer
+     *
+     * @return $this
+     */
+    public function setFooter($footer)
+    {
+        $this->footer = $footer;
 
         return $this;
     }
