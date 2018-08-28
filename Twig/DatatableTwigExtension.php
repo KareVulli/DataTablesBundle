@@ -213,6 +213,7 @@ class DatatableTwigExtension extends Twig_Extension
         $parameters = array();
         $values = array();
         $ajax = $this->accessor->getValue($multiselectColumn, 'ajax');
+        $entityValue = $this->accessor->getValue($multiselectColumn, 'value');
         $actions = $this->accessor->getValue($multiselectColumn, 'actions');
         $domId = $this->accessor->getValue($multiselectColumn, 'renderActionsToId');
         $datatableName = $this->accessor->getValue($multiselectColumn, 'datatableName');
@@ -253,6 +254,7 @@ class DatatableTwigExtension extends Twig_Extension
                 'ajax' => $ajax,
                 'actions' => $actions,
                 'route_parameters' => $parameters,
+                'key' => $entityValue,
                 'values' => $values,
                 'datatable_name' => $datatableName,
                 'dom_id' => $domId,
