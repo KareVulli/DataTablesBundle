@@ -142,7 +142,7 @@ $("#sg-datatables-{{ datatable_name }}").on("click", "input.sg-datatables-{{ dat
 {# handle multiselect action click #}
 $(".sg-datatables-{{ datatable_name }}-multiselect-action").on("click", function(event) {
     event.preventDefault();
-
+    const key = "{{ key|e('js') }}";
     if (oTable.rows(".selected").data().length > 0) {
         if ($(this).data("message")) {
             if (!confirm($(this).data("message"))) {
@@ -151,7 +151,7 @@ $(".sg-datatables-{{ datatable_name }}-multiselect-action").on("click", function
         }
 
         var items = $.map(oTable.rows(".selected").data(), function (i) {
-            return i
+            return i[key];
         });
 
         var pipeline = {{ pipeline }};
@@ -186,9 +186,8 @@ $(".sg-datatables-{{ datatable_name }}-multiselect-action").on("click", function
             form += '<input type="hidden" name="token" value="{{ token }}">';
             
             $.each( items, function( id, value ) {
-                $.each( value, function( key, value ) {
-                    form += '<input type="hidden" name="data[' + id + '][' + key + ']" value="' + escapeHtml(value) + '">';
-                });
+                var selection = escapeHtml(value);
+                form += '<input type="hidden" name="data[' + id + ']" value="' + selection + '">';
             });
             form = $('<form action="' + url + '" method="POST">' + form + '</form>');
             $(document.body).append(form);
